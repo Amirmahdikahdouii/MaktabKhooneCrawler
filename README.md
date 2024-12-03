@@ -23,7 +23,7 @@ pip install -r requirements.txt
 3. Setup `.env`:
 
 ```shell
-mv .env.example .env
+cp .env.example .env
 ```
 
 4. Fill **.env** variables with your own credentials
