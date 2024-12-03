@@ -14,7 +14,6 @@ sortedcontainers==2.4.0
 trio==0.27.0
 trio-websocket==0.11.1
 typing_extensions==4.12.2
-undetected-chromedriver==3.5.5
 urllib3==2.2.3
 websocket-client==1.8.0
 websockets==14.1
