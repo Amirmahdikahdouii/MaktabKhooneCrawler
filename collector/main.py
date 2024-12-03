@@ -45,6 +45,8 @@ def get_file_name(download_link: str) -> str:
     try:
         download_link = download_link.split("&name=")
         file_name = download_link[-1]
+        if file_name.endswith("\n"):
+            file_name = file_name.split("\n")[0]
         return file_name
     except Exception as e:
         print(f"Failed to extract file name from download URL: {e}")
