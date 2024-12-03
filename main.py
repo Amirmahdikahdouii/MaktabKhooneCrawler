@@ -1,24 +1,19 @@
-from selenium import webdriver
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-import undetected_chromedriver as uc
-from dotenv import load_dotenv
-import os
-import time
+from core import settings
+from core import kill_process
 from auth import authentication
+from collector import open_target_url, get_videos_href, extract_download_videos_in_file
 
-load_dotenv()
-MAKTABKHOONE_EMAIL = os.getenv("MAKTABKHOONE_EMAIL")
-MAKTABKHOONE_PASSWORD = os.getenv("MAKTABKHOONE_PASSWORD")
-TARGET_URL = ""
+if __name__ == "__main__":
+    TARGET_URL = input("Please Enter your course URL: ")
+    driver = settings.create_driver()
+    driver, is_authenticated = authentication(driver, settings.MAKTABKHOONE_EMAIL, settings.MAKTABKHOONE_PASSWORD)
+    if not is_authenticated:
+        kill_process("Failed to login MaktabKhoone.org")
 
-options = webdriver.ChromeOptions()
-options.add_argument("--start-maximized")
-driver = webdriver.Chrome(options=options)
-if authentication(driver, MAKTABKHOONE_EMAIL, MAKTABKHOONE_PASSWORD):
-    driver.get(TARGET_URL)
+    driver, is_redirected_to_course_url = open_target_url(driver, TARGET_URL)
+    if not is_redirected_to_course_url:
+        kill_process("Failed to redirect to course URL")
 
-    ...
-
-driver.quit()
+    driver, video_pages_href = get_videos_href(driver)
+    extract_download_videos_in_file(driver, video_pages_href)
+    driver.quit()
