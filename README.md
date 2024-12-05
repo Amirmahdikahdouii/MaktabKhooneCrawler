@@ -33,6 +33,10 @@ cp .env.example .env
 python main.py
 ```
 
+> [!IMPORTANT]
+> Before pass the course URL to the bot, make sure that you have signed up for the course, otherwise the bot will raise an excception.
+> Note that `links.txt` and `file_names.txt` files, will be updated and the new links will append to the end of the files, so make sure after crawled completely, handle this by yourself.
+
 ### Rename files after download:
 Remember after extracting links, you will have 2 files:
 1. links.txt
